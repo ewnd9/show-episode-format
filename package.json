@@ -1,6 +1,6 @@
 {
   "name": "show-episode-format",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Format your episodes",
   "main": "dist/index.js",
   "scripts": {
