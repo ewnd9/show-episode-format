@@ -11,7 +11,7 @@ $ npm install show-episode-format --save
 ## Usage
 
 ```js
-import fmt from 'show-episode-format';
+import * as fmt from 'show-episode-format';
 
 fmt.formatEpisode(1, 1) //=> '01x01'
 fmt.formatEpisode({ season: 1, episode: 2 }) //=> '01x02'
