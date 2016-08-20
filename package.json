@@ -1,32 +1,34 @@
 {
   "name": "show-episode-format",
   "version": "1.0.3",
-  "description": "Format your episodes",
+  "description": "Format your episodes to 01x01 or S01E01 strings",
   "main": "dist/index.js",
   "scripts": {
     "start": "node cli.js",
     "test": "ava",
-    "test:watch": "nodemon --exec ava",
+    "test:watch": "ava --watch",
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "babel -d dist/ src/",
     "prepublish": "npm run build"
   },
-  "preferGlobal": "false",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ewnd9/show-episode-format.git"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
-    ""
+    "show",
+    "format"
   ],
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.9.0",
+    "ava": "^0.16.0",
     "babel-cli": "^6.4.0",
     "babel-core": "^6.4.0",
-    "babel-preset-es2015": "^6.3.13",
-    "nodemon": "^1.8.1"
+    "babel-preset-es2015": "^6.3.13"
   }
 }

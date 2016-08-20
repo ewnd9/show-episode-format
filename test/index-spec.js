@@ -22,7 +22,7 @@ test('format series of episodes', t => {
   const result = format.formatSeries(episodes);
 
   t.is(result.length, 3);
-  t.same(result[0], [ep(1, 1), ep(1, 2), ep(1, 3)]);
-  t.same(result[1], [ep(1, 5), ep(1, 6)]);
-  t.same(result[2], [ep(2, 1)]);
+  t.deepEqual(result[0], [ep(1, 1), ep(1, 2), ep(1, 3)]);
+  t.deepEqual(result[1], [ep(1, 5), ep(1, 6)]);
+  t.deepEqual(result[2], [ep(2, 1)]);
 });
