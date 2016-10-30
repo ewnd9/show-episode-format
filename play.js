@@ -1,26 +1,16 @@
-# show-episode-format
+'use strict';
 
-[![Build Status](https://travis-ci.org/ewnd9/show-episode-format.svg?branch=master)](https://travis-ci.org/ewnd9/show-episode-format)
+const fmt = require('./');
 
-Format your episodes to 01x01 or S01E01 strings and group by air date
+for (const fn in fmt) {
+  const oldFn = fmt[fn];
 
-:warning: Minimalistic version without grouping and dependencies is
-available in branch [`v1.x`](https://github.com/ewnd9/show-episode-format/tree/v1.x)
-
-```sh
-$ npm install show-episode-format@1 --save
-```
-
-## Install
-
-```sh
-$ npm install show-episode-format --save
-```
-
-## Usage
-
-```js
-import * as fmt from 'show-episode-format';
+  fmt[fn] = function() {
+    const result = oldFn.apply(null, arguments);
+    console.log(fn)
+    console.log(require('util').inspect(result, { depth: null }));
+  }
+}
 
 fmt.formatEpisode(1, 1) //=> '01x01'
 fmt.formatEpisode({ season: 1, episode: 2 }) //=> '01x02'
@@ -185,8 +175,3 @@ fmt.groupShowsByAirDatesFlatten([episodes], _ => _, isWatched);
           [ { title: '01x01',
               episodes: [ { season: 1, episode: 1, date: '2016-07-15' } ] } ] } } ] ]
 */
-```
-
-## License
-
-MIT © [ewnd9](http://ewnd9.com)
