@@ -7,19 +7,19 @@ export function formatEpisode(ep) {
   }
 
   return `${tr(getSeason(ep))}x${tr(getEpisode(ep))}`;
-};
+}
 
 export function formatEpisodeRelease(ep) {
   if (arguments.length === 2) {
     ep = Array.prototype.slice.apply(arguments);
   }
 
-  return `s${tr(getSeason(ep))}e${tr(getEpisode(ep))}`
-};
+  return `s${tr(getSeason(ep))}e${tr(getEpisode(ep))}`;
+}
 
 export function formatSeries(episodes) {
   return foldConsecutive(episodes, (prev, ep, i) => i === 0 || (prev.season === ep.season && getEpisode(prev) === (getEpisode(ep) - 1)));
-};
+}
 
 export function formatSeriesByAirInterval(episodes) {
   let prevDate;
@@ -65,7 +65,7 @@ export function formatSeriesByAirInterval(episodes) {
 
     return r;
   });
-};
+}
 
 export function groupByEpisodeStreak(episodes) {
   return formatSeries(episodes)
@@ -78,7 +78,7 @@ export function groupByEpisodeStreak(episodes) {
 
       return { title, episodes };
     });
-};
+}
 
 export function groupByAirInterval(episodes) {
   const now = Date.now();
@@ -100,7 +100,7 @@ export function groupByAirInterval(episodes) {
       group.title = title;
       return group;
     });
-};
+}
 
 export function groupEpisodesByAirDates(episodes, watchedFn = () => false) {
   const now = new Date().getTime();
@@ -117,7 +117,7 @@ export function groupEpisodesByAirDates(episodes, watchedFn = () => false) {
       const date = new Date(getDate(ep)).getTime();
 
       if (watchedFn(ep, getSeason(ep), getEpisode(ep))) {
-        result.watched.push(ep)
+        result.watched.push(ep);
       } else if (date < now) {
         result.aired.push(ep);
       } else {
@@ -190,17 +190,17 @@ export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = ()
   fn('watched', 'watched', true);
 
   return result;
-};
+}
 
 export function groupShowsByAirDatesFlatten(shows, getEpisodes, watchedFn) {
   const result = groupShowsByAirDates(shows, getEpisodes, watchedFn);
   return [result.hasOneAired, result.hasAired, result.hasUnaired, result.watched].filter(_ => _.length > 0);
-};
+}
 
 export function getValue(ep, synonyms) {
   const result = synonyms.find(key => key in ep);
   return result ? ep[result] : null;
-};
+}
 
 export function getEpisode(ep) {
   if (Array.isArray(ep) && ep.length > 1) {
@@ -208,7 +208,7 @@ export function getEpisode(ep) {
   } else {
     return getValue(ep, ['episode_number', 'episode', 'number', 'ep']);
   }
-};
+}
 
 export function getSeason(ep) {
   if (Array.isArray(ep) && ep.length > 1) {
@@ -216,7 +216,7 @@ export function getSeason(ep) {
   } else {
     return getValue(ep, ['season_number', 'season', 's']);
   }
-};
+}
 
 export function getDate(ep) {
   if (Array.isArray(ep) && ep.length > 2) {
@@ -224,7 +224,7 @@ export function getDate(ep) {
   } else {
     return getValue(ep, ['air_date', 'first_aired', 'date']);
   }
-};
+}
 
 export function foldConsecutive(xs, fn) {
   return xs.reduce((total, curr, i) => {
@@ -239,7 +239,7 @@ export function foldConsecutive(xs, fn) {
 
     return total;
   }, [[]]);
-};
+}
 
 export function formatConsecutiveGroup(group, fn) {
   if (group.length === 1) {
@@ -247,10 +247,6 @@ export function formatConsecutiveGroup(group, fn) {
   } else {
     return `${fn(group[0])} - ${fn(group[group.length - 1])}`;
   }
-};
-
-function dateDiffStr(a, b) {
-  return dateDiff(new Date(a).getTime(), new Date(b).getTime());
 }
 
 function dateDiff(a, b) {
