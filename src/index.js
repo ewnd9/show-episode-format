@@ -1,6 +1,10 @@
 import groupBy from 'lodash.groupby';
 import pluralize from 'pluralize';
 
+export function isEqual(a, b) {
+  return getSeason(a) === getSeason(b) && getEpisode(a) === getEpisode(b);
+}
+
 export function formatEpisode(ep) {
   if (arguments.length === 2) {
     ep = Array.prototype.slice.apply(arguments);

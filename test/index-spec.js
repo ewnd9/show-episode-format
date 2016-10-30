@@ -18,6 +18,13 @@ test.before(() => {
   tk.freeze(time);
 });
 
+test('is equal', t => {
+  t.truthy(format.isEqual([1, 1], [1, 1]));
+  
+  t.falsy(format.isEqual([1, 1], [1, 2]));
+  t.falsy(format.isEqual([1, 1], [2, 1]));
+});
+
 test('format single episode', t => {
   t.is(format.formatEpisode(1, 1), '01x01');
   t.is(format.formatEpisode([1, 1]), '01x01');
