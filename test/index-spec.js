@@ -18,9 +18,19 @@ test.before(() => {
   tk.freeze(time);
 });
 
+test('compare', t => {
+  t.truthy(format.compare([1, 1], [1, 1]) === 0);
+
+  t.truthy(format.compare([1, 1], [1, 2]) === -1);
+  t.truthy(format.compare([1, 2], [1, 1]) === 1);
+
+  t.truthy(format.compare([1, 1], [2, 1]) === -1);
+  t.truthy(format.compare([2, 1], [1, 1]) === 1);
+});
+
 test('is equal', t => {
   t.truthy(format.isEqual([1, 1], [1, 1]));
-  
+
   t.falsy(format.isEqual([1, 1], [1, 2]));
   t.falsy(format.isEqual([1, 1], [2, 1]));
 });

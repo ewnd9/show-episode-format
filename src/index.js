@@ -5,6 +5,22 @@ export function isEqual(a, b) {
   return getSeason(a) === getSeason(b) && getEpisode(a) === getEpisode(b);
 }
 
+export function compare(a, b) {
+  const s0 = getSeason(a);
+  const s1 = getSeason(b);
+
+  const ep0 = getEpisode(a);
+  const ep1 = getEpisode(b);
+
+  if (s0 < s1 || (s0 === s1 && ep0 < ep1)) {
+    return -1;
+  } if (s0 > s1 || (s0 === s1 && ep0 > ep1)) {
+    return 1;
+  }
+
+  return 0;
+}
+
 export function formatEpisode(ep) {
   if (arguments.length === 2) {
     ep = Array.prototype.slice.apply(arguments);

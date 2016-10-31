@@ -31,6 +31,10 @@ fmt.formatEpisodeRelease({ season: 1, episode: 5 }) //=> 's01e05'
 fmt.isEqual([1, 1], [1, 1]) //=> true
 fmt.isEqual([1, 1], [1, 2]) //=> false
 
+fmt.compare([1, 1], [1, 1]) //=> 0
+fmt.compare([1, 1], [1, 2]) //=> -1
+fmt.compare([1, 2], [1, 1]) //=> 1
+
 const episodes = [
   { season: 1, episode: 1, date: '2016-07-15' },
   { season: 1, episode: 2, date: '2016-07-16' },
