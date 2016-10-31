@@ -66,16 +66,19 @@ fmt.groupByEpisodeStreak(episodes);
 [ { title: '01x01 - 01x02 (2)',
     episodes:
      [ { season: 1, episode: 1, date: '2016-07-15' },
-       { season: 1, episode: 2, date: '2016-07-16' } ] },
+       { season: 1, episode: 2, date: '2016-07-16' } ],
+    hasFile: false },
   { title: '01x04 - 01x06 (3)',
     episodes:
      [ { season: 1, episode: 4, date: '2016-07-20' },
        { season: 1, episode: 5, date: '2016-07-22' },
-       { season: 1, episode: 6, date: '2016-07-24' } ] },
+       { season: 1, episode: 6, date: '2016-07-24' } ],
+    hasFile: false },
   { title: '02x01 - 02x02 (2)',
     episodes:
      [ { season: 2, episode: 1, date: '2016-12-01' },
-       { season: 2, episode: 2, date: '2016-12-15' } ] } ]
+       { season: 2, episode: 2, date: '2016-12-15' } ],
+    hasFile: false } ]
 */
 
 fmt.groupByAirInterval(episodes);
@@ -84,18 +87,21 @@ fmt.groupByAirInterval(episodes);
      [ { season: 1, episode: 1, date: '2016-07-15' },
        { season: 1, episode: 2, date: '2016-07-16' } ],
     interval: 1,
-    title: '01x01 - 01x02 (7) every 1 days in -107 days (2016-07-15)' },
+    title: '01x01 - 01x02 (7) every 1 days in -107 days (2016-07-15)',
+    hasFile: false },
   { episodes:
      [ { season: 1, episode: 4, date: '2016-07-20' },
        { season: 1, episode: 5, date: '2016-07-22' },
        { season: 1, episode: 6, date: '2016-07-24' } ],
     interval: 2,
-    title: '01x04 - 01x06 (7) every 2 days in -102 days (2016-07-20)' },
+    title: '01x04 - 01x06 (7) every 2 days in -102 days (2016-07-20)',
+    hasFile: false },
   { episodes:
      [ { season: 2, episode: 1, date: '2016-12-01' },
        { season: 2, episode: 2, date: '2016-12-15' } ],
     interval: 14,
-    title: '02x01 - 02x02 (7) every 14 days in 31 days (2016-12-01)' } ]
+    title: '02x01 - 02x02 (7) every 14 days in 31 days (2016-12-01)',
+    hasFile: false } ]
 */
 
 function isWatched(episode, s, ep) {
@@ -112,7 +118,8 @@ fmt.groupEpisodesByAirDates(episodes, isWatched);
   unaired:
    [ { season: 2, episode: 1, date: '2016-12-01' },
      { season: 2, episode: 2, date: '2016-12-15' } ],
-  watched: [ { season: 1, episode: 1, date: '2016-07-15' } ] }
+  watched: [ { season: 1, episode: 1, date: '2016-07-15' } ],
+  hasFile: [] }
 */
 
 fmt.groupShowsByAirDates([episodes], _ => _, isWatched);
@@ -129,21 +136,26 @@ fmt.groupShowsByAirDates([episodes], _ => _, isWatched);
        report:
         { aired:
            [ { title: '01x02',
-               episodes: [ { season: 1, episode: 2, date: '2016-07-16' } ] },
+               episodes: [ { season: 1, episode: 2, date: '2016-07-16' } ],
+               hasFile: false },
              { title: '01x04 - 01x06 (3)',
                episodes:
                 [ { season: 1, episode: 4, date: '2016-07-20' },
                   { season: 1, episode: 5, date: '2016-07-22' },
-                  { season: 1, episode: 6, date: '2016-07-24' } ] } ],
+                  { season: 1, episode: 6, date: '2016-07-24' } ],
+               hasFile: false } ],
           unaired:
            [ { episodes:
                 [ { season: 2, episode: 1, date: '2016-12-01' },
                   { season: 2, episode: 2, date: '2016-12-15' } ],
                interval: 14,
-               title: '02x01 - 02x02 (2) every 14 days in 31 days (2016-12-01)' } ],
+               title: '02x01 - 02x02 (2) every 14 days in 31 days (2016-12-01)',
+               hasFile: false } ],
           watched:
            [ { title: '01x01',
-               episodes: [ { season: 1, episode: 1, date: '2016-07-15' } ] } ] } } ],
+               episodes: [ { season: 1, episode: 1, date: '2016-07-15' } ],
+               hasFile: false } ],
+          hasFile: [] } } ],
   hasOneAired: [],
   hasUnaired: [],
   watched: [] }
@@ -162,19 +174,24 @@ fmt.groupShowsByAirDatesFlatten([episodes], _ => _, isWatched);
       report:
        { aired:
           [ { title: '01x02',
-              episodes: [ { season: 1, episode: 2, date: '2016-07-16' } ] },
+              episodes: [ { season: 1, episode: 2, date: '2016-07-16' } ],
+              hasFile: false },
             { title: '01x04 - 01x06 (3)',
               episodes:
                [ { season: 1, episode: 4, date: '2016-07-20' },
                  { season: 1, episode: 5, date: '2016-07-22' },
-                 { season: 1, episode: 6, date: '2016-07-24' } ] } ],
+                 { season: 1, episode: 6, date: '2016-07-24' } ],
+              hasFile: false } ],
          unaired:
           [ { episodes:
                [ { season: 2, episode: 1, date: '2016-12-01' },
                  { season: 2, episode: 2, date: '2016-12-15' } ],
               interval: 14,
-              title: '02x01 - 02x02 (2) every 14 days in 31 days (2016-12-01)' } ],
+              title: '02x01 - 02x02 (2) every 14 days in 31 days (2016-12-01)',
+              hasFile: false } ],
          watched:
           [ { title: '01x01',
-              episodes: [ { season: 1, episode: 1, date: '2016-07-15' } ] } ] } } ] ]
+              episodes: [ { season: 1, episode: 1, date: '2016-07-15' } ],
+              hasFile: false } ],
+         hasFile: [] } } ] ]
 */

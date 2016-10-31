@@ -80,7 +80,7 @@ export function groupByEpisodeStreak(episodes) {
         title += ` (${episodes.length})`;
       }
 
-      return { title, episodes };
+      return formatGroup({ title, episodes });
     });
 }
 
@@ -102,17 +102,18 @@ export function groupByAirInterval(episodes) {
       title += ` in ${dateDiff(now, date)} ${pluralize('day', dateDiff(now, date))} (${dateStr})`;
 
       group.title = title;
-      return group;
+      return formatGroup(group);
     });
 }
 
-export function groupEpisodesByAirDates(episodes, watchedFn = () => false) {
+export function groupEpisodesByAirDates(episodes, watchedFn = () => false, hasFileFn = () => false, show) {
   const now = new Date().getTime();
 
   const result = {
     aired: [],
     unaired: [],
-    watched: []
+    watched: [],
+    hasFile: []
   };
 
   episodes
@@ -120,8 +121,10 @@ export function groupEpisodesByAirDates(episodes, watchedFn = () => false) {
     .forEach(ep => {
       const date = new Date(getDate(ep)).getTime();
 
-      if (watchedFn(ep, getSeason(ep), getEpisode(ep))) {
+      if (watchedFn(ep, getSeason(ep), getEpisode(ep), show)) {
         result.watched.push(ep);
+      } else if (hasFileFn(ep, getSeason(ep), getEpisode(ep), show)) {
+        result.hasFile.push(ep);
       } else if (date < now) {
         result.aired.push(ep);
       } else {
@@ -132,11 +135,11 @@ export function groupEpisodesByAirDates(episodes, watchedFn = () => false) {
   return result;
 }
 
-export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = () => false) {
+export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = () => false, hasFileFn = () => false) {
   const now = new Date().getTime();
 
   const items = shows.map(show => {
-    const report = groupEpisodesByAirDates(getEpisodes(show), watchedFn);
+    const report = groupEpisodesByAirDates(getEpisodes(show), watchedFn, hasFileFn, show);
     return { show, report };
   });
 
@@ -196,8 +199,8 @@ export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = ()
   return result;
 }
 
-export function groupShowsByAirDatesFlatten(shows, getEpisodes, watchedFn) {
-  const result = groupShowsByAirDates(shows, getEpisodes, watchedFn);
+export function groupShowsByAirDatesFlatten() {
+  const result = groupShowsByAirDates.apply(null, arguments);
   return [result.hasOneAired, result.hasAired, result.hasUnaired, result.watched].filter(_ => _.length > 0);
 }
 
@@ -251,6 +254,11 @@ export function formatConsecutiveGroup(group, fn) {
   } else {
     return `${fn(group[0])} - ${fn(group[group.length - 1])}`;
   }
+}
+
+function formatGroup(group) {
+  group.hasFile = !!group.episodes[0].hasFile;
+  return group;
 }
 
 function dateDiff(a, b) {
