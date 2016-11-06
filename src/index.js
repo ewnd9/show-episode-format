@@ -100,7 +100,7 @@ export function groupByEpisodeStreak(episodes) {
     });
 }
 
-export function groupByAirInterval(episodes) {
+export function groupByAirInterval(episodes, formatInterval) {
   const now = Date.now();
 
   return formatSeriesByAirInterval(episodes)
@@ -115,7 +115,9 @@ export function groupByAirInterval(episodes) {
         title += ` every ${group.interval === 7 ? 'week' : group.interval + ' days'}`;
       }
 
-      title += ` in ${dateDiff(now, date)} ${pluralize('day', dateDiff(now, date))} (${dateStr})`;
+      title += formatInterval ?
+        ` ${formatInterval(date, now)}` :
+        ` in ${dateDiff(now, date)} ${pluralize('day', dateDiff(now, date))} (${dateStr})`;
 
       group.title = title;
       return formatGroup(group);
@@ -151,7 +153,7 @@ export function groupEpisodesByAirDates(episodes, watchedFn = () => false, hasFi
   return result;
 }
 
-export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = () => false, hasFileFn = () => false) {
+export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = () => false, hasFileFn = () => false, formatInterval) {
   const now = new Date().getTime();
 
   const items = shows.map(show => {
@@ -198,7 +200,7 @@ export function groupShowsByAirDates(shows, getEpisodes = _ => _, watchedFn = ()
       Object.keys(report.report).forEach(key => {
         if (report.report[key].length > 0) {
           if (key === 'unaired') {
-            report.report[key] = groupByAirInterval(report.report[key]);
+            report.report[key] = groupByAirInterval(report.report[key], formatInterval);
           } else {
             report.report[key] = groupByEpisodeStreak(report.report[key]);
           }
