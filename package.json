@@ -1,6 +1,6 @@
 {
   "name": "show-episode-format",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Format your episodes to 01x01 or S01E01 strings and group by air date",
   "main": "dist/index.js",
   "scripts": {
